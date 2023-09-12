@@ -298,7 +298,7 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            apk add --update --no-cache tar gzip nodejs npm aws-cli ansible curl
+            apk add --update --no-cache --force tar gzip nodejs npm aws-cli ansible curl
       - attach_workspace:
           at: ~/
       - restore_cache:
