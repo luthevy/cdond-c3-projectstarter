@@ -203,6 +203,8 @@ jobs:
             apk add --update --no-cache ansible
             apk add --update --no-cache aws-cli
             apk add --update --no-cache curl
+      - restore_cache:
+          keys: [ backend-build ]
       - run:
           name: Configure server
           command: |
@@ -235,14 +237,14 @@ jobs:
     steps:
       # Checkout code from git
       - checkout
+      - attach_workspace:
+          at: ~/
+      - restore_cache:
+          keys: [backend-build]
       - run:
           name: Install dependencies
           command: |
             apk add --update --no-cache tar gzip nodejs npm aws-cli curl
-      - restore_cache:
-          keys: [backend-build]
-      - attach_workspace:
-          at: ~/
       - run:
           name: Run migrations
           command: |
