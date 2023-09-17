@@ -237,14 +237,14 @@ jobs:
     steps:
       # Checkout code from git
       - checkout
-      - attach_workspace:
-          at: ~/
-      - restore_cache:
-          keys: [backend-build]
       - run:
           name: Install dependencies
           command: |
             apk add --update --no-cache tar gzip nodejs npm aws-cli curl
+      - attach_workspace:
+          at: ~/
+      - restore_cache:
+          keys: [backend-build]
       - run:
           name: Run migrations
           command: |
@@ -337,8 +337,8 @@ jobs:
             apk add --update --no-cache curl
       - restore_cache:
           keys: [backend-build]
-      - attach_workspace:
-          at: ~/
+      # - attach_workspace:
+      #     at: ~/
       - run:
           name: Deploy backend
           command: |
@@ -469,7 +469,7 @@ workflows:
       - deploy-backend:
           requires: [run-migrations]
       - smoke-test:
-          requires: [deploy-backend, deploy-frontend]
+          requires: [deploy-backend]
       # - cloudfront-update:
       #     requires: [smoke-test]
       # - cleanup:
