@@ -370,23 +370,23 @@ jobs:
             sudo ./aws/install
       # - restore_cache:
       #     keys: [ backend-build ]
-      # - run:
-      #     name: Backend smoke test.
-      #     command: |
-      #       # your code here
-      #       export BACKEND_IP=$(aws ec2 describe-instances \
-      #       --query 'Reservations[*].Instances[*].PublicIpAddress' \
-      #       --filters Name=tag:aws:cloudformation:stack-name,Values=udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7} \
-      #       --output text)
-      #       echo $BACKEND_IP
-      #       export API_URL="http://${BACKEND_IP}:3030"
-      #       echo $API_URL
-      #       if curl "${API_URL}/api/status" | grep "ok"
-      #       then
-      #         exit 0
-      #       else
-      #         exit 1
-      #       fi
+      - run:
+          name: Backend smoke test.
+          command: |
+            # your code here
+            export BACKEND_IP=$(aws ec2 describe-instances \
+            --query 'Reservations[*].Instances[*].PublicIpAddress' \
+            --filters Name=tag:aws:cloudformation:stack-name,Values=udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7} \
+            --output text)
+            echo $BACKEND_IP
+            export API_URL="http://${BACKEND_IP}:3030"
+            echo $API_URL
+            if curl "${API_URL}/api/status" | grep "ok"
+            then
+              exit 0
+            else
+              exit 1
+            fi
       - restore_cache:
           keys: [ frontend-build ]
       - run:
