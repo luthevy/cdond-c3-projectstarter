@@ -241,10 +241,10 @@ jobs:
           name: Install dependencies
           command: |
             apk add --update --no-cache tar gzip nodejs npm aws-cli curl
-      # - attach_workspace:
-      #     at: ~/
-      # - restore_cache:
-      #     keys: [backend-build]
+      - restore_cache:
+          keys: [backend-build]
+      - attach_workspace:
+          at: ~/
       - run:
           name: Run migrations
           command: |
@@ -252,10 +252,10 @@ jobs:
             npm install
             npm run build
             npm run migrations >> migrations.txt
-      - persist_to_workspace:
-          root: ~/
-          paths:
-            - project/backend
+      # - persist_to_workspace:
+      #     root: ~/
+      #     paths:
+      #       - project/backend
       - run:
           name: Send migration results to kvdb
           command: |
@@ -323,6 +323,8 @@ jobs:
           fingerprints:
             - "9d:4e:b5:eb:a3:3c:01:62:10:89:7f:37:9d:6b:5c:05"
       # attach workspace
+      - attach_workspace:
+          at: ~/
       - run:
           name: Install dependencies
           command: |
@@ -333,10 +335,8 @@ jobs:
             apk add --update --no-cache aws-cli
             apk add --update --no-cache ansible
             apk add --update --no-cache curl
-      # - restore_cache:
-      #     keys: [backend-build]
-      # - attach_workspace:
-      #     at: ~/
+      - restore_cache:
+          keys: [backend-build]
       - run:
           name: Deploy backend
           command: |
