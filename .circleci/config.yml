@@ -321,9 +321,6 @@ jobs:
       - add_ssh_keys:
           fingerprints:
             - "9d:4e:b5:eb:a3:3c:01:62:10:89:7f:37:9d:6b:5c:05"
-      # attach workspace
-      - attach_workspace:
-          at: ~/
       - run:
           name: Install dependencies
           command: |
@@ -334,6 +331,10 @@ jobs:
             apk add --update --no-cache aws-cli
             apk add --update --no-cache ansible
             apk add --update --no-cache curl
+      - restore_cache:
+          keys: [backend-build]
+      - attach_workspace:
+          at: ~/
       - run:
           name: Deploy backend
           command: |
@@ -349,7 +350,8 @@ jobs:
   smoke-test:
     docker:
       # Lightweight Docker image
-      - image: circleci/node:13.8.0
+      # - image: circleci/node:13.8.0
+      - image: python:3.7-alpine3.16
     steps:
       # Checkout code from git
       - checkout
