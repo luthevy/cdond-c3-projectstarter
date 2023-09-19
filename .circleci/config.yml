@@ -350,13 +350,13 @@ jobs:
   smoke-test:
     docker:
       # Lightweight Docker image
-      # - image: circleci/node:13.8.0
-      - image: python:3.7-alpine3.16
+      - image: circleci/node:13.8.0
+      # - image: python:3.7-alpine3.16
     steps:
       # Checkout code from git
       - checkout
-      # - attach_workspace:
-      #     at: ~/
+      - attach_workspace:
+          at: ~/
       - restore_cache:
           keys: [backend-build]
       - run:
