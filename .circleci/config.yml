@@ -370,31 +370,19 @@ jobs:
           name: Backend smoke test.
           command: |
             # your code here
-            # Export backend ip to environment variable to use in frontend .env file
             export BACKEND_IP=$(aws ec2 describe-instances \
             --query 'Reservations[*].Instances[*].PublicIpAddress' \
             --filters Name=tag:aws:cloudformation:stack-name,Values=udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7} \
             --output text)
-            # Fetch and prepare the BACKEND_IP env var for use in the frontend
+            echo $BACKEND_IP
             export API_URL="http://${BACKEND_IP}:3030"
-            # print the API_URL env var to the console
             echo $API_URL
-            # Check if backend is up and running by calling /api/status endpoint and checking if it returns "ok"
-            if curl --connect-timeout 5 "${API_URL}/api/status" | grep "ok"; then return 0; else return 0; fi
-            
-            # export BACKEND_IP=$(aws ec2 describe-instances \
-            # --query 'Reservations[*].Instances[*].PublicIpAddress' \
-            # --filters Name=tag:aws:cloudformation:stack-name,Values=udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7} \
-            # --output text)
-            # echo $BACKEND_IP
-            # export API_URL="http://${BACKEND_IP}:3030"
-            # echo $API_URL
-            # if curl "${API_URL}/api/status" | grep "ok"
-            # then
-            #   exit 0
-            # else
-            #   exit 1
-            # fi
+            if curl "${API_URL}/api/status" | grep "ok"
+            then
+              exit 0
+            else
+              exit 1
+            fi
       # - restore_cache:
       #     keys: [ frontend-build ]
       # - run:
