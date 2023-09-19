@@ -190,7 +190,7 @@ jobs:
       # Add ssh keys with fingerprint
       - add_ssh_keys:
           fingerprints:
-            - "9d:4e:b5:eb:a3:3c:01:62:10:89:7f:37:9d:6b:5c:05"
+            - "64:40:83:10:64:35:24:67:72:b1:40:f6:ee:0c:3c:f7"
       - run:
           name: Install dependencies
           command: |
@@ -320,7 +320,7 @@ jobs:
       # Add ssh keys with fingerprint
       - add_ssh_keys:
           fingerprints:
-            - "9d:4e:b5:eb:a3:3c:01:62:10:89:7f:37:9d:6b:5c:05"
+            - "64:40:83:10:64:35:24:67:72:b1:40:f6:ee:0c:3c:f7"
       - run:
           name: Install dependencies
           command: |
