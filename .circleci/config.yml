@@ -173,7 +173,6 @@ jobs:
             --query 'Reservations[*].Instances[*].PublicIpAddress' \
             --filters Name=tag:aws:cloudformation:stack-name,Values=udapeople-backend-${CIRCLECI_WORKFLOW_ID:0:7} \
             --output text) >> ~/project/.circleci/ansible/inventory.txt
-            cat .circleci/ansible/inventory.txt
       - persist_to_workspace:
           root: ~/
           paths:
@@ -186,15 +185,12 @@ jobs:
       # Docker image here that supports Ansible
       - image: python:3.7-alpine3.16
     steps:
-      # Checkout code from git11
+      # Checkout code from git
       - checkout
       # Add ssh keys with fingerprint
       - add_ssh_keys:
           fingerprints:
             - "9d:4e:b5:eb:a3:3c:01:62:10:89:7f:37:9d:6b:5c:05"
-      # attach workspace
-      - attach_workspace:
-          at: ~/
       - run:
           name: Install dependencies
           command: |
@@ -204,6 +200,9 @@ jobs:
             apk add --update --no-cache ansible
             apk add --update --no-cache aws-cli
             apk add --update --no-cache curl
+      # attach workspace
+      - attach_workspace:
+          at: ~/
       - run:
           name: Configure server
           command: |
