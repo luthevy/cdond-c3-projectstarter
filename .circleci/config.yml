@@ -204,8 +204,6 @@ jobs:
             apk add --update --no-cache ansible
             apk add --update --no-cache aws-cli
             apk add --update --no-cache curl
-      - restore_cache:
-          keys: [ backend-build ]
       - run:
           name: Configure server
           command: |
@@ -254,10 +252,10 @@ jobs:
             npm install
             npm run build
             npm run migrations >> migrations.txt
-      - persist_to_workspace:
-          root: ~/
-          paths:
-            - project/backend
+      # - persist_to_workspace:
+      #     root: ~/
+      #     paths:
+      #       - project/backend
       - run:
           name: Send migration results to kvdb
           command: |
