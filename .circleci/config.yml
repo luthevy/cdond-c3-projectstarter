@@ -415,17 +415,13 @@ jobs:
       - run:
           name: Backend smoke test.
           command: |
-            # Export backend ip to environment variable to use in frontend .env file
             export BACKEND_IP=$(aws ec2 describe-instances \
             --query 'Reservations[*].Instances[*].PublicIpAddress' \
             --filters Name=tag:aws:cloudformation:stack-name,Values=udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7} \
             --output text)
-            # Fetch and prepare the BACKEND_IP env var for use in the frontend
             export API_URL="http://${BACKEND_IP}:3030"
-            # print the API_URL env var to the console
             echo $API_URL
-            # Check if backend is up and running by calling /api/status endpoint and checking if it returns "ok"
-            if curl --connect-timeout 5 "${API_URL}/api/status" | grep "ok"; then return 0; else return 0; fi
+            if curl --connect-timeout 5 "${API_URL}/api/status" | grep "ok"; then return 0; else return 1; fi
       - run:
           name: Frontend smoke test.
           command: |
@@ -557,5 +553,5 @@ workflows:
           requires: [smoke-test]
       # I commented out the cleanup job because it will delete the infrastructure when I run the workflow and Reviewer cant review my work (website)
       # But If I uncomment it, it will delete the infrastructure after the workflow is done.It runs normally.        
-      - cleanup:
-          requires: [cloudfront-update]
+      # - cleanup:
+      #     requires: [cloudfront-update]
