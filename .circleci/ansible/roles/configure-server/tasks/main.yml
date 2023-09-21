@@ -1,20 +1,29 @@
 ---
-- name: "Upgrade dependencies"
-  become: true
+# tasks file for configure-server
+# Update and upgrade packages on the server
+- name: 'Update and upgrade packages on server.'
+  become: yes
   apt:
-    upgrade: "yes"
-
-- name: "Install dependencies"
-  become: true
+    upgrade: yes
+    update_cache: yes
+    cache_valid_time: 86400
+# Remove unneeded packages on the server sudo apt autoremove
+- name: remove unneeded deps 
+  become: yes
   apt:
-    name: [ "nodejs", "npm" ]
+    autoremove: yes
+# Install nodejs and npm on the server  (sudo apt install nodejs npm)
+- name: install deps 
+  become: yes
+  apt:
+    name: ['nodejs', 'npm']
     state: latest
     update_cache: yes
-
-- name: "Install PM2 dependencies"
-  become: true
+# Install pm2 on the server (sudo npm install pm2 -g)    
+- name: install pm2
+  become: yes
   npm:
     name: pm2
     global: yes
+    state: latest
     production: yes
-    state: present
