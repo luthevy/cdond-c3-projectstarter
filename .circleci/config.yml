@@ -421,11 +421,11 @@ jobs:
             --filters Name=tag:aws:cloudformation:stack-name,Values=udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7} \
             --output text)
             # Fetch and prepare the BACKEND_IP env var for use in the frontend
-            export API_URL="http://${BACKEND_IP}:3030"
+            export API_URL="http://${BACKEND_IP}:3030/api/status"
             # print the API_URL env var to the console
             echo $API_URL
             # Check if backend is up and running by calling /api/status endpoint and checking if it returns "ok"
-            if curl --connect-timeout 5 "${API_URL}/api/status" | grep "ok"; then return 0; else return 0; fi
+            if curl --connect-timeout 5 "${API_URL}" | grep "ok"; then return 0; else return 0; fi
       - run:
           name: Frontend smoke test.
           command: |
