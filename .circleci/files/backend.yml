@@ -24,7 +24,7 @@ Resources:
           ToPort: 3030
           CidrIp: 0.0.0.0/0
         - IpProtocol: tcp
-          FromPort: 0
+          FromPort: 65535 
           ToPort: 65535
           CidrIp: 0.0.0.0/0
         # Open port 9100 for prometheus to scrape metrics
