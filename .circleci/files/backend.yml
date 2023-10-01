@@ -13,17 +13,14 @@ Resources:
       GroupName: !Sub UdaPeople-${ID}
       GroupDescription: Allow port 22 and port 3030.
       SecurityGroupIngress:
-        # Open port 22 for SSH access
         - IpProtocol: tcp
           FromPort: 22
           ToPort: 22
           CidrIp: 0.0.0.0/0
-        # Open port 3030 for the backend app api
         - IpProtocol: tcp
           FromPort: 3030
           ToPort: 3030
           CidrIp: 0.0.0.0/0
-        # Open port 9100 for scraping metrics
         - IpProtocol: tcp
           FromPort: 9100
           ToPort: 9100
@@ -32,7 +29,6 @@ Resources:
           FromPort: 0
           ToPort: 65535
           CidrIp: 0.0.0.0/0
-        # Open port for Prometheus
         - IpProtocol: tcp
           FromPort: 9090
           ToPort: 9090
@@ -45,7 +41,7 @@ Resources:
           FromPort: 80
           IpProtocol: tcp
           ToPort: 80
-          Description: Allows inbound comm on tcp port 80
+          Description: Allows inbound communication on TCP port 80
         - CidrIp: 0.0.0.0/0
           FromPort: 8000
           IpProtocol: tcp
